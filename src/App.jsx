@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import "./index.css";
+import { motion } from "framer-motion";
 
 function App() {
   const [userAddress, setUserAddress] = useState("");
@@ -103,17 +104,17 @@ function App() {
     fetch();
   }, [typeToken, hasQueried]);
   return (
-    <div className="main">
+    <div className="main glitch">
       <div className="nav">
         <div className="">Tokindexer</div>
         <div className="">Get all the ERC-20/ERC-721</div>
         <div className="">
           {userAddress.length > 0 ? (
-            <button className="connect" title={userAddress}>
+            <button className="connect glitch" title={userAddress}>
               {userAddress.substring(0, 7)}...{userAddress.substring(37)}
             </button>
           ) : (
-            <button className="connect" onClick={connectWallet}>
+            <button className="connect glitch" onClick={connectWallet}>
               Connect Wallet
             </button>
           )}
@@ -128,12 +129,13 @@ function App() {
               setHasQueried(false);
               setSearchAddress(e.target.value);
             }}
+            className="glitch"
             required
             value={searchAddress}
           />
           <button
             type="submit"
-            className="connect"
+            className="connect glitch"
             onClick={(e) => {
               e.preventDefault();
               getTokens();
@@ -142,17 +144,21 @@ function App() {
             Search
           </button>
         </form>
-        {errorMessage !== "" && <p className="errorMessage">{errorMessage}</p>}
+        {errorMessage !== "" && <p className="errorMessage ">{errorMessage}</p>}
         <div className="container">
           <button
             id="erc20"
-            className="unselected selected"
+            className="glitch selected"
             onClick={() => {
               if (typeToken !== "erc20") {
                 const str = "erc20";
                 setTypeToken(str);
-                var e = document.getElementById("erc20");
+                var ev = document.getElementById("erc20");
+                ev.classList.toggle("selected");
+                ev.classList.toggle("unselected");
+                var e = document.getElementById("erc721");
                 e.classList.toggle("selected");
+                e.classList.toggle("unselected");
                 setIsLoading(true);
               }
             }}
@@ -161,13 +167,18 @@ function App() {
           </button>
           <button
             id="erc721"
-            className="unselected"
+            className="unselected glitch"
             onClick={() => {
               if (typeToken !== "erc721") {
                 const str = "erc721";
                 setTypeToken(str);
+                var ev = document.getElementById("erc20");
+                ev.classList.toggle("selected");
+                ev.classList.toggle("unselected");
                 var e = document.getElementById("erc721");
                 e.classList.toggle("selected");
+                e.classList.toggle("unselected");
+
                 setIsLoading(true);
               }
             }}
@@ -177,7 +188,7 @@ function App() {
         </div>
         {isLoading ? (
           <div>
-            <BiLoaderAlt />
+            <BiLoaderAlt className="loader glitch" />
           </div>
         ) : (
           hasQueried &&
@@ -188,7 +199,7 @@ function App() {
                   <div className="containerTable">
                     {results?.map((e, i) => {
                       return (
-                        <div className="results" key={i}>
+                        <div className="results glitch" key={i}>
                           <img src={e.logo ? e.logo : ""}></img>
                           <div>Name: {e.name}</div>
                           <div>Symbol: {e.symbol}</div>
@@ -222,7 +233,13 @@ function App() {
                       <div className="containerTable">
                         {results?.map((e, i) => {
                           return (
-                            <div key={i}>
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              whileInView={{ opacity: 1 }}
+                              transition={{ duration: 1 }}
+                              key={i}
+                              className="results"
+                            >
                               {e?.media?.length > 0 &&
                               (e?.media[0]?.format === "jpg" ||
                                 e?.media[0]?.format === "jpeg" ||
@@ -261,7 +278,7 @@ function App() {
                                   </a>
                                 </p>{" "}
                               </div>
-                            </div>
+                            </motion.div>
                           );
                         })}
                       </div>

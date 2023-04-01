@@ -63,11 +63,11 @@ input {
 }
 
 .containerTable {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%/3, max(64px, 100%/5)), 1fr)
-  );
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
 }
 .results {
   display: flex;
@@ -80,6 +80,10 @@ input {
   width: fit-content;
   padding: 10px;
   box-shadow: 5px 5px black;
+  overflow: scroll;
+}
+.results::-webkit-scrollbar {
+  display: none;
 }
 .results div {
   overflow: scroll;
@@ -92,7 +96,7 @@ input {
   border-radius: 0px;
   padding: 5px;
   background: #e0e0e0;
-  box-shadow: inset -5px 5px 10px antiquewhite, inset 5px -5px 10px #ffffff;
+  box-shadow: inset -5px 5px 10px rgb(220, 157, 150), inset 5px -5px 10px #ffffff;
 }
 .unselected {
   border-radius: 0px;
@@ -100,4 +104,78 @@ input {
   box-shadow: -5px 5px 10px antiquewhite, 5px -5px 10px #ffffff;
   background-color: antiquewhite;
   padding: 5px;
+}
+.loader{
+animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.glitch {
+  text-align: center;
+  font-weight: bold;    
+  position: relative;
+  text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+  0.025em 0.04em 0 #fffc00;
+  animation: glitch 725ms infinite;
+  /* width: fit-content; */
+}
+
+.glitch span {
+  position: absolute;
+  text-align: center;
+  width: fit-content;
+  top: 0;
+  left: 0;
+}
+
+.glitch span:first-child {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-0.04em, -0.03em);
+  opacity: 0.75;
+}
+
+.glitch span:last-child {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(0.04em, 0.03em);
+  opacity: 0.75;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+      0.025em 0.04em 0 #fffc00;
+  }
+  15% {
+    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
+      0.025em 0.04em 0 #fffc00;
+  }
+  16% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
+      -0.05em -0.05em 0 #fffc00;
+  }
+  50% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+      0 -0.04em 0 #fffc00;
+  }
+  99% {
+    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
+      0 -0.04em 0 #fffc00;
+  }
+  100% {
+    text-shadow: -0.05em 0 0 #00fffc, -0.025em -0.04em 0 #fc00ff,
+      -0.04em -0.025em 0 #fffc00;
+  }
 }
